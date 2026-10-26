@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<QBWCXml>
+  <AppID>6F2A9C0E-3E41-4C9E-9B7A-0C8B2D4F5A11</AppID>
+  <AppName>Smokey Row Wholesale Orders</AppName>
+  <AppDescription>Sends wholesale orders into QuickBooks Desktop Enterprise as sales orders.</AppDescription>
+  <AppSupport>https://smokeyrow-roasthouse.base44.app</AppSupport>
+  <AppURL>https://REPLACE-WITH-YOUR-BRIDGE-URL/qbwc</AppURL>
+  <UserName>SmokeyRowOrders</UserName>
+  <OwnerID>90CE1B27-B9D5-4A62-8E29-5E4DD9B7C4C1</OwnerID>
+  <FileID>{7D9AF030-6C04-4C4F-9C3A-9F21A105B9C1}</FileID>
+  <QBType>QBFS</QBType>
+  <Scheduler>
+    <RunEveryNMinutes>5</RunEveryNMinutes>
+  </Scheduler>
+  <IsReadOnly>false</IsReadOnly>
+</QBWCXml>
