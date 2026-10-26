@@ -1,5 +1,5 @@
 {
   "port": 8647,
-  "api_key": "",
-  "qbwc_password": ""
+  "api_key": "API_KEY",
+  "qbwc_password": "QBWC_PASSWORD"
 }
