@@ -15,6 +15,11 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const config = JSON.parse(fs.readFileSync(path.join(__dirname, "config.json"), "utf8"));
+// Cloud hosts (Render, Railway, Fly.io) provide PORT and secrets as env vars;
+// they take priority over config.json so the same code runs anywhere.
+const PORT = process.env.PORT || config.port || 8647;
+const API_KEY = process.env.API_KEY || config.api_key;
+const QBWC_PASSWORD = process.env.QBWC_PASSWORD || config.qbwc_password;
 const DATA_PATH = path.join(__dirname, "data.json");
 
 let state = { orders: {} };
@@ -159,7 +164,7 @@ function handleSoap(body, res) {
         }
       }
       save();
-      if (pass !== config.qbwc_password) {
+      if (pass !== QBWC_PASSWORD) {
         return send(`<authenticateResponse xmlns="${NS}"><authenticateResult><string>none</string><string>none</string></authenticateResult></authenticateResponse>`);
       }
       const hasWork = Object.values(state.orders).some((o) => o.status === "queued");
@@ -273,7 +278,7 @@ const server = http.createServer(async (req, res) => {
   if (url.pathname === "/qbwc") return handleSoap(raw, res);
 
   // App-facing endpoints — require the shared API key
-  if (req.headers["x-api-key"] !== config.api_key) {
+  if (req.headers["x-api-key"] !== API_KEY) {
     return json(401, { ok: false, message: "Invalid API key" });
   }
 
@@ -336,7 +341,7 @@ const server = http.createServer(async (req, res) => {
   res.end("Not found");
 });
 
-server.listen(config.port || 8647, () => {
-  console.log(`Smokey Row QuickBooks bridge listening on port ${config.port || 8647}`);
-  console.log(`Web Connector endpoint: http://localhost:${config.port || 8647}/qbwc`);
+server.listen(PORT, () => {
+  console.log(`Smokey Row QuickBooks bridge listening on port ${PORT}`);
+  console.log(`Web Connector endpoint: http://localhost:${PORT}/qbwc`);
 });
